@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Milestone — Trustless freelance escrow on Arbitrum Sepolia</title>
+<meta name="description" content="Milestone escrow for freelance work: clients fund milestones up front, freelancers get paid on approval, a neutral arbitrator resolves disputes. Live on Arbitrum Sepolia testnet.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">⬡ <strong>Milestone</strong> <span class="tag">Arbitrum Sepolia · testnet</span></div>
+  <div class="walletbox">
+    <span id="netBadge" class="badge muted">not connected</span>
+    <button id="connectBtn" class="btn primary">Connect wallet</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Freelance escrow, without the middleman.</h1>
+    <p>Clients lock payment in a smart contract before work starts. Freelancers submit proof of work per
+    milestone. Payment releases on approval — or a neutral arbitrator decides a dispute. No platform fees,
+    no frozen payouts, no trust required. Built for the Arbitrum Open House Dubai Buildathon.</p>
+    <ol class="steps">
+      <li><b>1. Fund</b> — client creates an escrow and locks ETH.</li>
+      <li><b>2. Milestones</b> — work is split into priced milestones.</li>
+      <li><b>3. Submit</b> — freelancer attaches proof of work.</li>
+      <li><b>4. Release</b> — client approves, ETH pays out instantly.</li>
+      <li><b>5. Dispute</b> — arbitrator resolves if things go wrong.</li>
+    </ol>
+  </section>
+
+  <section id="deployBanner" class="card warn hidden">
+    <h2>Contract not deployed yet</h2>
+    <p>No <code>app/deployment.json</code> was found. Deploy MilestoneEscrow to Arbitrum Sepolia from your
+    own wallet (testnet gas only), or wait for the project deployer to publish the address.</p>
+    <button id="deployBtn" class="btn primary">Deploy contract (your wallet)</button>
+    <p id="deployStatus" class="mono small"></p>
+  </section>
+
+  <section id="contractCard" class="card hidden">
+    <h2>Contract</h2>
+    <p class="mono"><span id="contractAddr"></span>
+      <a id="contractLink" href="#" target="_blank" rel="noopener">view on Arbiscan ↗</a></p>
+    <p class="small muted">Network: Arbitrum Sepolia (chainId 421614) · No admin keys — the deployer has no special powers.</p>
+  </section>
+
+  <section class="card">
+    <h2>Create escrow</h2>
+    <form id="createForm">
+      <label>Freelancer address
+        <input id="freelancerInput" type="text" placeholder="0x…" required>
+      </label>
+      <label>Arbitrator address <span class="muted">(optional — leave blank for none)</span>
+        <input id="arbitratorInput" type="text" placeholder="0x… or blank">
+      </label>
+      <label>Funding (ETH, testnet)
+        <input id="fundInput" type="number" step="0.001" min="0.001" value="0.1" required>
+      </label>
+      <button class="btn primary" type="submit">Create &amp; fund escrow</button>
+    </form>
+    <p id="createStatus" class="mono small"></p>
+  </section>
+
+  <section class="card">
+    <h2>My escrows</h2>
+    <p class="small muted">Escrows where you are the client or the freelancer. <button id="refreshBtn" class="btn small">Refresh</button></p>
+    <div id="escrowList"><p class="muted">Connect your wallet to see escrows.</p></div>
+  </section>
+
+  <section class="card">
+    <h2>How the demo works</h2>
+    <ul>
+      <li>Use two wallets (or two browser profiles): one as <b>client</b>, one as <b>freelancer</b>.</li>
+      <li>Client creates an escrow, adds milestones, then the freelancer submits work with a proof link (IPFS CID or URL).</li>
+      <li>Client approves → ETH is released on-chain. Or either side disputes → the arbitrator resolves.</li>
+      <li>Everything is on Arbitrum Sepolia testnet — get free testnet ETH from a Sepolia faucet and bridge it
+      via <a href="https://bridge.arbitrum.io/" target="_blank" rel="noopener">bridge.arbitrum.io</a>.</li>
+    </ul>
+    <p class="small muted">Source: <a id="repoLink" href="https://github.com/Tiannuryadins/arbitrum-milestone-escrow" target="_blank" rel="noopener">github.com/Tiannuryadins/arbitrum-milestone-escrow</a> · MIT licensed · Testnet only — no real funds.</p>
+  </section>
+</main>
+
+<div id="toast" class="toast hidden"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
